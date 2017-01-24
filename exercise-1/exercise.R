@@ -56,10 +56,10 @@ print( select(worst.row,id) )
 mostHwy <- function(input.year, input.make){
   filtered.frame <- filter(vehicles, year == input.year, make == input.make)
   best.row <- filter(filtered.frame, filtered.frame$hwy == max(filtered.frame$hwy) )
-  return( best.row )
+  return( select(best.row,model) )
 }
 
 # What was the most efficient honda model of 1995?
 
-mostHwy(1995,"honda")
+mostHwy(1995,"Honda")
 
