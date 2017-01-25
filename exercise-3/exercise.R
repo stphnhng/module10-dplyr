@@ -26,7 +26,13 @@ unique(best.hwy$model)
 
 # Which Accura model has the best hwy MPG in 2015? (nesting functions)
 
-unique( filter(vehicles,make == "Acura", year == "2015") )
+unique( 
+  filter(
+    filter(vehicles,make == "Acura", year == "2015"),  
+    filter(vehicles,make == "Acura", year == "2015")$hwy ==
+      max( filter(vehicles,make == "Acura", year == "2015")$hwy )
+  )
+)
 
 # Which Accura model has the best hwy MPG in 2015? (pipe operator)
 
