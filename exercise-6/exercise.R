@@ -9,13 +9,21 @@ library('dplyr')
 # Create a dataframe of the average arrival delay for each destination, then use left_join
 # to join on the "airports" dataframe, which has the airport info
 
-dep.delay.by.month <- group_by(flights, dest) %>% summarize(mean = mean(dep_delay, na.rm = TRUE))
-
-left_join(airports, dep.delay.by.month)
-
+avg.arrival.delay <- flights %>% 
+  group_by(dest) %>% 
+  summarise(avg.delay = mean(arr_delay, na.rm = TRUE)) %>% 
+  mutate(faa = dest) %>% 
+  left_join(airports, by = 'faa') %>% 
+  arrange(-avg.delay)
 
 # Create a dataframe of the average arrival delay for each airline, then use left_join
 # to join on the "airlines" dataframe, which has the airline info
+
+avg.airline.delay <- flights %>% 
+  group_by(carrier) %>% 
+  summarise(avg.delay = mean(arr_delay, na.rm=TRUE)) %>% 
+  left_join(airlines, by='carrier') %>% 
+  arrange(-avg.delay)
 
 
 ### Bonus ###
